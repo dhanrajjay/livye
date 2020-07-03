@@ -1,0 +1,57 @@
+<div class="container">
+	<div>
+		<p class="inline-block">Channels</p>
+		<div class="pull-right">
+			<input type="text" placeholder="Search" [formControl]="searchKey" />
+			<input *ngIf="!isDrmUser" type="button" value="Create" (click)="openFormModal()" class="btn btn-sm btn-primary" />
+			<div ngbDropdown class="d-inline-block">
+		      <button class="btn btn-sm btn-outline-success" id="dropdownBasic1" ngbDropdownToggle>Export</button>
+		      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+		        <button ngbDropdownItem>CSV</button>
+		        <button ngbDropdownItem>XLS</button>			        
+		      </div>
+		    </div>
+		</div>	
+	</div>
+	
+	<table class="table">
+	  <thead>
+		  <tr>
+		    <th scope="col">Channel Name</th>
+		    <th scope="col">Channel Id</th>
+		    <th scope="col">Channel Type</th>
+		    <th scope="col">Broadcaster</th>
+		    <th scope="col">Language</th>
+		    <th scope="col">Category</th>
+		    <th scope="col">Channel Quality</th>
+		  </tr>
+	  </thead>
+	  <tbody>
+		  <tr *ngFor="let channel of channelList; index as i">
+		    <td scope="row">
+		    	<ngb-highlight class="btn btn-link no-padding" (click)="openFormModal(channel)"
+		    	 [result]="channel.name" [term]="searchKey.value"></ngb-highlight>
+			</td>
+		    <td scope="row">
+		    	<ngb-highlight [result]="channel.channel_id" [term]="searchKey.value"></ngb-highlight>
+		    </td>
+		    <td scope="row">{{ channel.channel_type }}</td>
+		    <td scope="row">{{ channel.broadcaster_name }}</td>		    
+		    <td scope="row">{{ channel.language }}</td>
+		    <td scope="row">{{ channel.category }}</td>
+		    <td scope="row">{{ channel.channel_quality }}</td>
+		  </tr>
+	  </tbody>
+	</table>
+
+	<div class="d-flex justify-content-between p-2">
+	  <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+	  </ngb-pagination>
+
+	  <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+	    <option [ngValue]="10">10 items per page</option>
+	    <option [ngValue]="25">25 items per page</option>
+	    <option [ngValue]="50">50 items per page</option>
+	  </select>
+	</div>	
+</div>

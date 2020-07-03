@@ -1,0 +1,95 @@
+<div class="modal-header">
+  <h4 class="modal-title">Add Channel</h4>  
+</div>
+
+<div class="modal-body">
+  <div class="container">
+    <form [formGroup]="channelListForm" (ngSubmit)="submitForm()">
+      <div class="form-group">
+        <label for="sel1">Channel Name</label>
+        <input type="text" class="form-control" formControlName="name" />        
+      </div>
+      <div class="form-group">
+        <label for="emaiml">Image URL</label>
+        <input type="text" class="form-control" formControlName="image_url" />
+      </div>
+      <div class="form-group">
+        <label for="password">Language</label>
+        <select class="form-control" formControlName="language">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+        </select>
+      </div>      
+      <div class="form-group">
+        <label for="firstName">Channel Quality</label>
+        <select class="form-control" formControlName="channel_quality">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="firstName">Channel Type</label>
+        <select class="form-control" formControlName="channel_type">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="phoneNumber">Broadcaster Name</label>
+        <input type="text" class="form-control" formControlName="broadcaster_name">
+      </div>
+      <div class="form-group">
+        <label for="phoneNumber">Color Code</label>
+        <div class="form-inline">
+          <input type="text" class="form-control" style="width: 90%" formControlName="color_code">
+          <div class="form-control" style="width: 35px; height: 35px; margin-left: 5px;"
+           [style.background-color]="channelListForm.value.color_code"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="phoneNumber">Short Description</label>
+        <input type="text" class="form-control" formControlName="short_description">
+      </div>
+      <div class="form-group">
+        <label for="firstName">Category</label>
+        <select class="form-control" formControlName="category">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="phoneNumber">Long Description</label>
+        <input type="text" class="form-control" formControlName="long_description">
+      </div>
+      <div class="form-group">
+        <label for="phoneNumber">Web Banner</label>
+        <input type="text" class="form-control" formControlName="web_banner">
+      </div>
+      <div class="form-group">
+        <label for="status">Is Available</label>
+        <div class="form-check">
+            <label class="form-check-label">
+               <input type="checkbox" formControlName="is_available">
+            </label>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="modal-footer">    
+  <button class="btn btn-success"
+    [disabled]="!channelListForm.valid">      
+    {{ data ? 'Update' : 'Create' }}
+  </button>
+  <button class="btn btn-outline" (click)="activeModal.dismiss()">
+    Cancel
+  </button>
+</div>

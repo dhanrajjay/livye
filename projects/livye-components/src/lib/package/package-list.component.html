@@ -1,0 +1,21 @@
+<div class="container">
+  <ngb-tabset type="pills">
+
+    <ng-container *ngFor="let packge of packageList">
+
+      <ngb-tab title="{{packge.package_name}}">
+
+          <ng-template ngbTabContent>
+            <ul>
+              <li *ngFor="let channel of packge.packagechannels">
+                <img style="height: 80px; width: 120px;" src={{channel.channellist.image_url}} />{{channel.channellist.name}}
+              </li>
+            </ul> 
+          </ng-template>  
+
+       </ngb-tab> 
+
+    </ng-container>  
+
+  </ngb-tabset>
+</div> 

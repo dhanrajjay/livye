@@ -1,0 +1,81 @@
+<div class="container">
+	<div>
+		<p class="inline-block">Organization List</p>
+		<div class="pull-right">
+			<input type="text" placeholder="Search" [formControl]="searchKey" />			
+			<div ngbDropdown class="d-inline-block">
+		      <button class="btn btn-sm btn-outline-success" id="dropdownBasic1" ngbDropdownToggle>Export</button>
+		      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+		        <button ngbDropdownItem>CSV</button>
+		        <button ngbDropdownItem>XLS</button>			        
+		      </div>
+		    </div>
+		</div>	
+	</div>
+	
+	<ng-container *ngIf="!isDrmUser">
+		<table class="table">
+		  <thead>
+			  <tr>
+			    <th scope="col">Name</th>
+			    <th scope="col">Email</th>
+			    <th scope="col">Organization</th>
+			    <th scope="col">Phone Number</th>
+			    <th scope="col">City</th>
+			    <th scope="col">Account Lock</th>
+			    <th scope="col"></th>
+			  </tr>
+		  </thead>
+		  <tbody>
+			  <tr *ngFor="let subscriber of subscriberList; index as i">
+			    <td scope="row">{{ subscriber.customer_firstname }}</td>
+			    <td scope="row">
+			    	<ngb-highlight [result]="subscriber.email" [term]="searchKey.value"></ngb-highlight>
+			    </td>
+			    <td scope="row">{{ subscriber.orgname }}</td>
+			    <td scope="row">{{ subscriber.phone_number }}</td>		    
+			    <td scope="row">{{ subscriber.billing_city }}</td>
+			    <td scope="row">{{ subscriber.email }}</td>
+			  </tr>
+		  </tbody>
+		</table>
+	</ng-container>	
+
+	<ng-container *ngIf="isDrmUser">
+		<table class="table">
+		  <thead>
+			  <tr>
+			    <th scope="col">Email</th>
+			    <th scope="col">City</th>
+			    <th scope="col">State</th>
+			    <th scope="col">Subscriber Code</th>
+			    <th scope="col">MAC Address</th>
+			    <th scope="col">Account Lock</th>
+			  </tr>
+		  </thead>
+		  <tbody>
+			  <tr *ngFor="let subscriber of subscriberList; index as i">
+			    <td scope="row">
+			    	<ngb-highlight [result]="subscriber.email" [term]="searchKey.value"></ngb-highlight>
+				</td>
+			    <td scope="row">{{ subscriber.installation_city}}</td>
+			    <td scope="row">{{ subscriber.installation_state }}</td>
+			    <td scope="row">{{ subscriber.activation_code }}</td>		    
+			    <td scope="row">{{ subscriber.mac_address }}</td>
+			    <td scope="row">{{ subscriber.email }}</td>
+			  </tr>
+		  </tbody>
+		</table>
+	</ng-container>	
+
+	<div class="d-flex justify-content-between p-2">
+	  <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+	  </ngb-pagination>
+
+	  <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+	    <option [ngValue]="10">10 items per page</option>
+	    <option [ngValue]="25">25 items per page</option>
+	    <option [ngValue]="50">50 items per page</option>
+	  </select>
+	</div>	
+</div>

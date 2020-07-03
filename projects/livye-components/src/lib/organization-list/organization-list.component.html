@@ -1,0 +1,54 @@
+<div class="container">
+	<div>
+		<p class="inline-block">Organization List</p>
+		<div class="pull-right">
+			<input type="text" placeholder="Search" [formControl]="searchKey" />
+			<input *ngIf="!isDrmUser" type="button" value="Create" (click)="openFormModal()" class="btn btn-sm btn-primary" />
+			<div ngbDropdown class="d-inline-block">
+		      <button class="btn btn-sm btn-outline-success" id="dropdownBasic1" ngbDropdownToggle>Export</button>
+		      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+		        <button ngbDropdownItem>CSV</button>
+		        <button ngbDropdownItem>XLS</button>			        
+		      </div>
+		    </div>
+		</div>	
+	</div>
+	
+	<table class="table">
+	  <thead>
+		  <tr>
+		    <th scope="col">Organization Name</th>
+		    <th scope="col">Organization Type</th>
+		    <th scope="col">City</th>
+		    <th scope="col">State</th>
+		    <th scope="col">Technical Email</th>
+		    <th scope="col">Phone Number</th>
+		  </tr>
+	  </thead>
+	  <tbody>
+		  <tr *ngFor="let org of organizations; index as i">
+		    <td scope="row">
+		    	<ngb-highlight class="btn btn-link no-padding" [result]="org.org_name" [term]="searchKey.value"></ngb-highlight>
+			</td>
+		    <td scope="row">
+		    	<ngb-highlight [result]="org.org_type" [term]="searchKey.value"></ngb-highlight>
+		    </td>
+		    <td scope="row">{{ org.city }}</td>
+		    <td scope="row">{{ org.state }}</td>		    
+		    <td scope="row">{{ org.technical_email }}</td>
+		    <td scope="row">{{ org.phone_no }}</td>
+		  </tr>
+	  </tbody>
+	</table>
+
+	<div class="d-flex justify-content-between p-2">
+	  <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+	  </ngb-pagination>
+
+	  <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+	    <option [ngValue]="10">10 items per page</option>
+	    <option [ngValue]="25">25 items per page</option>
+	    <option [ngValue]="50">50 items per page</option>
+	  </select>
+	</div>	
+</div>

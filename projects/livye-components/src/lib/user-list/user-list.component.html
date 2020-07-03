@@ -1,0 +1,121 @@
+<div class="container user-list">
+
+	<ng-container  *ngIf="!isFullGrid">
+		<table class="table table-sm table-responsive">
+		  <thead>
+		  <tr>
+		    <th scope="col">First Name</th>
+		    <th scope="col">Last Name</th>
+		    <th scope="col">Email</th>
+		    <th scope="col">Timezone</th>
+		    <th scope="col">Account Lock</th>
+		    <th scope="col">Updated At</th>
+		  </tr>
+		  </thead>
+		  <tbody>
+		  <tr *ngFor="let user of userList; index as i">
+		    <td scope="row">{{ user.customer_firstname }}</td>
+		    <td scope="row" style="width: 120px">{{ user.customer_lastname || '--' }}</td>
+		    <td scope="row">{{ user.email }}</td>
+		    <td scope="row">{{ user.timezone }}</td>
+		    <td scope="row" style="width: 120px">{{ user.account_lock }}</td>
+		    <td scope="row">{{ user.updatedAt }}</td>
+		  </tr>
+		  </tbody>
+		</table>
+	</ng-container>
+
+	<ng-container *ngIf="isFullGrid">
+		<div>
+			<p class="inline-block">User List</p>
+			<div class="pull-right">
+				<input type="text" placeholder="Search" [formControl]="searchKey" />
+				<input type="button" value="Create" (click)="openFormModal()" class="btn btn-sm btn-primary" />
+				<div ngbDropdown class="d-inline-block">
+			      <button class="btn btn-sm btn-outline-success" id="dropdownBasic1" ngbDropdownToggle>Export</button>
+			      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+			        <button ngbDropdownItem>CSV</button>
+			        <button ngbDropdownItem>XLS</button>			        
+			      </div>
+			    </div>
+			</div>	
+		</div>
+
+		<ng-container *ngIf="!isDrmUser">
+			<table class="table">
+			  <thead>
+				  <tr>
+				    <th scope="col">Email Id</th>
+				    <th scope="col">First Name</th>
+				    <th scope="col">Last Name</th>
+				    <th scope="col">Organization</th>
+				    <th scope="col">Role</th>
+				    <th scope="col">Status</th>
+				  </tr>
+			  </thead>
+			  <tbody>
+				  <tr *ngFor="let user of users; index as i">
+				    <td scope="row">
+				    	<ngb-highlight class="btn btn-link no-padding" [result]="user.mail_id" [term]="searchKey.value" (click)="openFormModal(user)"></ngb-highlight>
+					</td>
+				    <td scope="row">
+				    	<ngb-highlight [result]="user.first_name" [term]="searchKey.value"></ngb-highlight>
+				    </td>
+				    <td scope="row">
+				    	<ngb-highlight [result]="user.last_name" [term]="searchKey.value"></ngb-highlight>
+				    </td>
+				    <td scope="row">
+				    	<ngb-highlight [result]="user.org_name" [term]="searchKey.value"></ngb-highlight>
+				    </td>
+				    <td scope="row">{{ user.roles }}</td>
+				    <td scope="row">{{ user.status ? 'Active' : 'Non-Active' }}</td>
+				  </tr>
+			  </tbody>
+			</table>
+		</ng-container>
+
+		<ng-container *ngIf="isDrmUser">
+			<table class="table">
+			  <thead>
+				  <tr>
+				    <th scope="col">Email Id</th>
+				    <th scope="col">First Name</th>
+				    <th scope="col">Last Name</th>
+				    <th scope="col">Phone Number</th>
+				    <th scope="col">Role</th>
+				    <th scope="col">Status</th>
+				  </tr>
+			  </thead>
+			  <tbody>
+				  <tr *ngFor="let user of users; index as i">
+				    <td scope="row">
+				    	<ngb-highlight class="btn btn-link no-padding" [result]="user.mail_id" [term]="searchKey.value"></ngb-highlight>
+					</td>
+				    <td scope="row">
+				    	<ngb-highlight [result]="user.first_name" [term]="searchKey.value"></ngb-highlight>
+				    </td>
+				    <td scope="row">
+				    	<ngb-highlight [result]="user.last_name" [term]="searchKey.value"></ngb-highlight>
+				    </td>
+				    <td scope="row">
+				    	<ngb-highlight [result]="user.phone_number" [term]="searchKey.value"></ngb-highlight>
+				    </td>
+				    <td scope="row">{{ user.roles }}</td>
+				    <td scope="row">{{ user.status ? 'Active' : 'Non-Active' }}</td>
+				  </tr>
+			  </tbody>
+			</table>
+		</ng-container>
+
+		<div class="d-flex justify-content-between p-2">
+		  <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+		  </ngb-pagination>
+
+		  <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+		    <option [ngValue]="10">10 items per page</option>
+		    <option [ngValue]="25">25 items per page</option>
+		    <option [ngValue]="50">50 items per page</option>
+		  </select>
+		</div>
+	</ng-container>
+</div>
